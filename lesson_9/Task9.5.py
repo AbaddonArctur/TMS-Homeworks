@@ -1,4 +1,5 @@
 import os
+import re
 
 os.makedirs("Task5", exist_ok=True)
 
@@ -23,6 +24,9 @@ with open(input_file, "w", encoding='utf-8') as inp_file:
 with open(input_file, "r", encoding='utf-8') as inp_file:
     print(f"\nИсходные данные:\n{inp_file.read()}")
 
+pattern = r"(.+)\s*-\s*(\d+)"
+errors = []
+
 print("Меньше 3 баллов:")
 with open(input_file, "r", encoding='utf-8') as inp_file:
     # Итерируемся по строкам в input.txt
@@ -32,9 +36,22 @@ with open(input_file, "r", encoding='utf-8') as inp_file:
         if not line:
             continue  # Пропускаем пустые строки
 
-        # Разбиваем строку по " - " на имя и оценку
-        name, score_str = line.split(" - ")
-        score = int(score_str)
+# Разбиваем строку по группам согласно паттерну и проверяем правильность формата строки
+        try:
+            match = re.match(pattern, line)
+            if not match:
+                raise ValueError(f"Неверный формат строки: '{line}'")
 
-        if score < 3:
-            print(name)
+            name, score_str = match.groups()
+            score = int(score_str)
+
+            if score < 3:
+                print(name)
+
+        except ValueError as e:
+            errors.append(str(e))
+
+if errors:
+    print("\nОшибки при обработке строк:")
+    for err in errors:
+        print(err)
