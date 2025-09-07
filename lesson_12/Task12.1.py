@@ -32,7 +32,7 @@ class Warehouse:
         self.__products.append(product)
 
     # Поиск по индексу
-    def get_by_index(self, index):
+    def __getitem__(self, index):
         try:
             return self.__products[index]
         except IndexError:
@@ -70,7 +70,7 @@ print("\nВсе товары:")
 w.show_all()
 
 print("\nТовар по индексу 1:")
-print(w.get_by_index(1))  # Должен вывести "Молоко 1л..."
+print(w[1])  # Должен вывести "Молоко 1л..."
 
 print("\nТовар c наименованием 'Хлеб':")
 print(w.get_by_name("Хлеб"))  # Должен вывести "Хлеб..."
