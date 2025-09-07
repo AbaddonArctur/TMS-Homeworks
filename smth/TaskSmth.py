@@ -33,7 +33,7 @@ class Validator:
     Класс для проверки корректности данных.
     """
 
-    EMAIL_REGEX = r'^[\w\.-]+@[\w\.-]+\.\w+$'  # шаблон для email
+    EMAIL_REGEX = re.compile(r'^[\w\.-]+@[\w\.-]+\.\w+$')  # шаблон для email
 
     @staticmethod
     def validate_email(email):
@@ -209,5 +209,4 @@ class Application:
 
 
 if __name__ == "__main__":
-    app = Application()
-    app.run()
+    Application().run()
